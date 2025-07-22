@@ -1,5 +1,9 @@
+**/.DS_Store
+
 /pack/minpac/opt/*
 /pack/minpac/start/*
+/pack/plugins/opt/*
+/pack/plugins/start/*
 
 pack/non-managed
 
@@ -22,3 +26,7 @@ coc/**/*
 !coc/.gitkeep
 
 spell/*.spl
+
+UltiSnips/*
+pack/YouCompleteMe/*
+**/tags

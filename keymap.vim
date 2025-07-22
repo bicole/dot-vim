@@ -362,5 +362,10 @@ nnoremap <silent> gX  :call os#Gx()<CR>
 nnoremap <silent> gof :call os#FileManager()<CR>
 nnoremap <silent> got :call os#Terminal()<CR>
 
+nnoremap <leader>n :NERDTreeFocus<CR>
+nnoremap <C-n> :NERDTreeMirror<CR>:NERDTreeFocus<CR>
+nnoremap <C-t> :NERDTreeToggle<CR>
+nnoremap <C-f> :NERDTreeFind<CR>
+
 # ]]]
 # vim:fdm=marker:fmr=[[[,]]]:ft=vim

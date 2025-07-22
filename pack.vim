@@ -40,11 +40,11 @@ call plugpac#Begin({
   verbose: 2,
   after_hook: AfterFun,
 })
-Pack 'k-takata/minpac', {'type': 'opt'}
+Pack 'k-takata/minpac', {type: 'opt'}
 
-Pack 'lifepillar/vim-gruvbox8', { 'type': 'opt' }
+Pack 'lifepillar/vim-gruvbox8', { type: 'opt' }
 if is_ssh
-  Pack 'ojroques/vim-oscyank', { 'type': 'delay', 'rev': 'main' } # <leader>c <leader>cc <A-w>
+  Pack 'ojroques/vim-oscyank', { type: 'delay', 'rev': 'main' } # <leader>c <leader>cc <A-w>
 endif
 if v:version >= 901 && !getcompletion('comment', 'packadd')->empty()
   autocmd_add([{
@@ -55,10 +55,10 @@ if v:version >= 901 && !getcompletion('comment', 'packadd')->empty()
     cmd: 'timer_start(1, (_) => execute("packadd comment"))',
   }])
 else
-  Pack 'tomtom/tcomment_vim', { 'type': 'delay' }
+  Pack 'tomtom/tcomment_vim', { type: 'delay' }
 endif
 Pack 'bootleq/vim-cycle'
-Pack 'itchyny/lightline.vim'
+Pack 'itchyny/lightline.vim', {type: 'start'}
 Pack 'machakann/vim-sandwich', { type: 'start' }
 
 if g:minimal_plugins
@@ -81,15 +81,15 @@ else
   # Pack 'andymass/vim-matchup'
   packadd matchit
   Pack 'nickspoons/vim-movefast'
-  Pack 'airblade/vim-rooter', { 'type': 'start' } # <leader>r
-  Pack 'mhinz/vim-startify', { 'type': 'start' }
+  Pack 'airblade/vim-rooter', { type: 'start', 'branch': 'master' } # <leader>r
+  Pack 'mhinz/vim-startify', { type: 'start' }
   # Pack 'Yggdroot/LeaderF', { 'do': "packadd LeaderF \| LeaderfInstallCExtension" }
   Pack 'bennyyip/tasks.vim'
   # Pack 'romainl/vim-qf' # { } H L
   Pack 'habamax/vim-shout'
   Pack 'tpope/vim-eunuch'
 
-  Pack 'habamax/vim-dir', { 'type': 'start' }
+  Pack 'habamax/vim-dir', { type: 'start' }
 
   if has("patch-9.0.1811")
     autocmd_add([{
@@ -112,8 +112,6 @@ else
   Pack 'tpope/vim-characterize'
   Pack 'tpope/vim-repeat', { type: 'start' }
   Pack 'chrisbra/NrrwRgn' # :NR :NW :NRV :WR
-  # Pack 'justinmk/vim-gtfo' # gof got
-  # Pack 'bennyyip/vim-highlightedyank'
   Pack 'ubaldot/vim-highlight-yanked'
   if !is_win
     Pack 'lilydjwg/fcitx.vim'
@@ -129,7 +127,7 @@ else
   Pack 'tommcdo/vim-exchange', { 'on': '<Plug>(Exchange)' } # gx gxx gxg
   Pack 'tpope/vim-abolish'
   Pack 'tpope/vim-apathy' # 'path'
-  Pack 'Konfekt/vim-scratchpad'
+  Pack 'Konfekt/vim-scratchpad', { 'branch': 'main' }
 
   # Pack 'michaeljsmith/vim-indent-object'
 
@@ -142,24 +140,19 @@ else
   Pack 'rhysd/conflict-marker.vim' # [x ]x
   Pack 'tommcdo/vim-fugitive-blame-ext'
   Pack 'tpope/vim-fugitive', { type: 'start' }
-  # Pack 'tpope/vim-rhubarb'
-  # Pack 'errael/splice9', { type: 'start', frozen: true }
   # Language [[[2
   if executable('ctags')
     Pack 'ludovicchabant/vim-gutentags', { type: 'start' }
   endif
-  # Pack 'bennyyip/lsp', { type: 'start', branch: 'dev' }
   Pack 'yegappan/lsp', { type: 'start', branch: 'main' }
 
   Pack 'Konfekt/vim-compilers'
-  # Pack 'Konfekt/vim-formatprgs'
 
   Pack 'girishji/devdocs.vim'
-  # Pack 'rhysd/devdocs.vim'
   Pack 'Shiracamus/vim-syntax-x86-objdump-d'
-  Pack 'octol/vim-cpp-enhanced-highlight', { 'for': 'cpp' }
+  # Pack 'octol/vim-cpp-enhanced-highlight', { 'for': 'cpp' }
   Pack 'tikhomirov/vim-glsl', { 'for': 'glsl' }
-  Pack 'chrisbra/csv.vim', { 'type': 'opt' }
+  Pack 'chrisbra/csv.vim', { type: 'opt' }
   Pack 'pearofducks/ansible-vim'
 
   Pack 'tridactyl/vim-tridactyl'
@@ -183,9 +176,80 @@ else
   endif
   # ]]]
   # ]]]
-  Pack 'SirVer/ultisnips'
+  Pack 'SirVer/ultisnips', {'branch': 'master', 'rev': '3.2'}
   # Pack 'Shougo/neosnippet.vim', { type: 'opt'}
-  Pack 'honza/vim-snippets', { 'type': 'opt' }
+  Pack 'honza/vim-snippets', { type: 'opt' }
+
+  # What I've added
+  Pack 'ycm-core/YouCompleteMe', { type: 'start' }
+  Pack  'jeffkreeftmeijer/vim-numbertoggle', { type: 'start' }
+  # Pack 'vim-airline/vim-airline', {type: 'start'}
+  Pack 'stephpy/vim-yaml', {type: 'start'}
+  Pack 'chrisbra/SudoEdit.vim'
+  Pack 'ctrlpvim/ctrlp.vim', {type: 'start'}
+  Pack 'kassio/neoterm', {type: 'start'}
+  Pack 'tpope/vim-surround', {type: 'start'}
+  Pack 'tpope/vim-commentary', {type: 'start'}
+  Pack 'tpope/vim-sensible', {type: 'start'}
+
+  Pack 'farmergreg/vim-lastplace', {type: 'start'}
+
+  Pack 'dense-analysis/ale', {type: 'start'}
+  # Pack 'maximbaz/lightline-ale', {type: 'start'}
+
+  Pack 'ntpeters/vim-better-whitespace', {type: 'start'}
+
+  Pack 'z0mbix/vim-shfmt', {type: 'start'}
+
+  Pack 'prettier/vim-prettier', {type: 'start'}
+
+  Pack 'fatih/vim-go', {type: 'opt'}
+
+  Pack 'myhere/vim-nodejs-complete', {type: 'start'}
+
+  Pack 'pangloss/vim-javascript', {type: 'start'}
+
+  Pack 'othree/html5.vim', {type: 'start'}
+
+  Pack 'vim-scripts/tailtab.vim', {type: 'start'}
+  Pack 'vim-scripts/dbext.vim', {type: 'start'}
+  Pack 'vim-scripts/pluginbackup.vim', {type: 'start'}
+  Pack 'vim-scripts/taglist.vim', {type: 'start'}
+  Pack 'vim-scripts/todo-txt.vim', {type: 'start'}
+  # Pack 'vim-scripts/sort-python-imports', {type: 'start'}
+  # Pack 'vim-scripts/ruler.vim', {type: 'start'}
+  Pack 'vim-scripts/auto_autoread.vim', {type: 'start'}
+  Pack 'vim-scripts/marvim', {type: 'start'}
+  Pack 'vim-scripts/logstash.vim', {type: 'opt'}
+
+  Pack 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --all'}
+  Pack 'junegunn/fzf.vim'
+  Pack 'neoclide/coc.nvim', {'branch': 'release'}
+  Pack 'antoinemadec/coc-fzf', {'branch': 'release'}
+
+  Pack 'airblade/vim-gitgutter', {type: 'start'}
+
+  Pack 'preservim/tagbar', {type: 'start'}
+  Pack 'preservim/nerdcommenter', {type: 'start'}
+  Pack 'preservim/vimux', {type: 'start'}
+  Pack 'preservim/vim-markdown', {type: 'start'}
+  Pack 'preservim/vim-textobj-quote'
+  Pack 'preservim/vim-indent-guides'
+  Pack 'preservim/vim-litecorrect'
+  Pack 'preservim/vim-wordchipper'
+  Pack 'preservim/vim-wordy'
+  Pack 'preservim/vim-textobj-sentence'
+  Pack 'preservim/vim-thematic'
+  Pack 'preservim/vim-wheel'
+  Pack 'preservim/vim-lexical'
+
+  Pack 'preservim/nerdtree', {type: 'start'}
+  Pack 'Xuyuanp/nerdtree-git-plugin', {type: 'start'}
+  Pack 'ryanoasis/vim-devicons', {type: 'start'}
+  Pack 'tiagofumo/vim-nerdtree-syntax-highlight', {type: 'start'}
+  Pack 'scrooloose/nerdtree-project-plugin', {type: 'start'}
+  Pack 'PhilRunninger/nerdtree-buffer-ops', {type: 'start'}
+  Pack 'preservim/tagbar', {type: 'start'}
 endif
 plugpac#End()
 # plugpac helpers [[[1
