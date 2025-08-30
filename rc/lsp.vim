@@ -16,7 +16,7 @@ if executable('ccls')
           }
         }
       },
-      "clang": {"extraArgs": ["--gcc-toolchain=/usr", "-std=c++20"]},
+      "clang": {"extraArgs": ["--gcc-toolchain=/usr"]},
       "completion": {
         "detailedLabel": true,
         "placeholder": true
@@ -80,6 +80,7 @@ if executable('ruff')
     filetype: 'python',
     name: 'ruff',
     path: 'ruff',
+    # args: ['server', '-v', '--config', $HOME .. '/ruff.toml']
     args: ['server']
   })
 endif
@@ -95,7 +96,7 @@ endif
 
 if executable('rust-analyzer')
   lsp_servers->add({
-    name: 'rustlang',
+    name: 'rustanalyzer',
     filetype: ['rust'],
     path: 'rust-analyzer',
     args: [],
@@ -143,8 +144,8 @@ command! LspDisableDiag DisableDiag()
 command! LspEnableDiag EnableDiag()
 
 def BindKeys()
-  nnoremap <silent><buffer> gd        <Cmd>call MarkPush()<cr>:execute v:count  .. 'LspGotoDefinition'<CR>
-  nnoremap <silent><buffer> 'd   <Cmd>call MarkPush()<cr>:execute 'vertical '  .. v:count .. 'LspGotoDefinition'<CR>
+  nnoremap <silent><buffer> gd        <Cmd>execute v:count  .. 'LspGotoDefinition'<CR>
+  nnoremap <silent><buffer> 'd   <Cmd>execute 'vertical '  .. v:count .. 'LspGotoDefinition'<CR>
   # nnoremap <silent><buffer> gi        <Cmd>LspGotoImpl<CR>
   nnoremap <silent><buffer> gt        <Cmd>LspGotoTypeDef<CR>
   nnoremap <silent><buffer> gr        <Cmd>LspShowReferences<CR>
@@ -179,6 +180,7 @@ var lsp_options = {
   semanticHighlight: false,
   condensedCompletionMenu: true,
   useQuickfixForLocations: true,
+  ignoreCompleteItemsIsIncomplete: ['rustanalyzer']
 }
 g:LspOptionsSet(lsp_options)
 silent! DisableDiag()

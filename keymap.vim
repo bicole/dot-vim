@@ -16,24 +16,18 @@ nnoremap <c-u> <c-u>zz
 nnoremap n nzzzv
 nnoremap N Nzzzv
 nnoremap J mzJ`z
+# tag stack
+nnoremap H <cmd>pop<CR>
+nnoremap L <cmd>tag<CR>
 # edit [[[1
 # open q:
 set cedit=<C-Y>
-# swap <c-n> and <c-x><c-n>
-inoremap <expr> <C-N> pumvisible() ?  "\<C-N>" : "\<C-X>\<C-N>"
-inoremap <C-X><C-N> <C-N>
-inoremap <silent><expr> <C-O> pumvisible() ? "\<C-N>" : "\<C-X>\<C-O>"
-
-inoremap <silent><expr> <TAB> pumvisible() ? "\<C-N>" : "\<Tab>"
-inoremap <expr><S-TAB> pumvisible() ? "\<C-P>" : "\<C-H>"
-
 inoremap <Plug>(meta-o) <C-O>o
 inoremap <Plug>(meta-O) <C-O>O
 # get output from python
 imap <C-R>c <esc>:let @a=""<CR>:let @a = execute( "py3 print()")<left><left><left>
 # time
-inoremap <silent> <C-G><C-T> <C-R>=repeat(complete(col('.'),map(["%Y-%m-%d %H:%M:%S","%a, %d %b %Y %H:%M:%S %z","%Y %b %d","%d-%b-%y","%a %b %d %T %Z %Y"],'strftime(v:val)')+[localtime()]),0)<CR>
-inoremap <silent> <C-G><C-Y> <ESC><cmd>call setreg('a', getline('.')->slice(0, getpos('.')[2]))<BAR>put a<CR>A
+inoremap <silent> <C-G><C-T> <C-R>=repeat(complete(col('.'),map(["%Y-%m-%d %H:%M:%S", "%Y-%m-%d", '%FT%T%z', "%a, %d %b %Y %H:%M:%S %z","%Y %b %d","%d-%b-%y","%a %b %d %T %Z %Y"],'strftime(v:val)')+[localtime()]),0)<CR>
 # rsi [[[1
 inoremap      <C-A> <C-O>^
 inoremap <C-X><C-A> <C-A>
@@ -74,10 +68,10 @@ onoremap <silent>ai <scriptcmd>text.ObjIndent(v:false)<CR>
 xnoremap <silent>ii <esc><scriptcmd>text.ObjIndent(v:true)<CR>
 xnoremap <silent>ai <esc><scriptcmd>text.ObjIndent(v:false)<CR>
 
-onoremap <silent>ic <scriptcmd>text.ObjComment(v:true)<CR>
-onoremap <silent>ac <scriptcmd>text.ObjComment(v:false)<CR>
-xnoremap <silent>ic <esc><scriptcmd>text.ObjComment(v:true)<CR>
-xnoremap <silent>ac <esc><scriptcmd>text.ObjComment(v:false)<CR>
+# onoremap <silent>ic <scriptcmd>text.ObjComment(v:true)<CR>
+# onoremap <silent>ac <scriptcmd>text.ObjComment(v:false)<CR>
+# xnoremap <silent>ic <esc><scriptcmd>text.ObjComment(v:true)<CR>
+# xnoremap <silent>ac <esc><scriptcmd>text.ObjComment(v:false)<CR>
 xnoremap <silent> in <esc><scriptcmd>text.ObjNumber()<CR>
 onoremap <silent> in :<C-u>normal vin<CR>
 
@@ -109,6 +103,9 @@ xnoremap <leader>p p
 nnoremap <expr> gp '`[' .. strpart(getregtype(), 0, 1) .. '`]'
 # copy entire file contents to system clipboard
 nnoremap yY <scriptcmd>os.Yank(getline(1, '$')->join("\n"))<CR>
+# duplicate line retaining the column position:
+nnoremap <C-G><C-j> <cmd>copy.<CR>
+nnoremap <C-G><C-k> <cmd>copy-1<CR>
 # visual [[[1
 # keep selection when indent line in visual mode
 xnoremap <expr> > v:count > 0 ? ">" : ">gv"
@@ -214,10 +211,13 @@ nnoremap <leader>q <scriptcmd>ToggleQF()<CR>
 nnoremap <leader>l <scriptcmd>ToggleLoc()<CR>
 # file, buffer [[[1
 nnoremap <leader>fs <scriptcmd>utils.KeepChangeMarksExec('update')<CR>
-nnoremap <silent> <leader>fy :call os#Yank(expand("%:t"))<CR>:echo "buffer filename copied"<CR>
-nnoremap <silent> <leader>fP :call os#Yank(expand("%:p"))<CR>:echo "buffer path copied"<CR>
+nnoremap <silent> <leader>fY :call os#Yank(expand("%:p:t"))<CR>:echo $"{(expand('%:p:t'))} copied"<CR>
+nnoremap <silent> <leader>fy :call os#Yank(expand("%:p"))<CR>:echo $"{expand('%:p')} copied"<CR>
+nnoremap <silent> <leader>dY :call os#Yank(expand("%:p:h:t"))<CR>:echo $"{expand('%:p:h:t')} copied"<CR>
+nnoremap <silent> <leader>dy :call os#Yank(expand("%:p:h"))<CR>:echo $"{expand('%:p:h')} copied"<CR>
 nnoremap cd :lcd %:p:h<bar>pwd<cr>
 nnoremap cu :lcd ..<bar>pwd<cr>
+
 
 nnoremap <silent><leader><tab> <c-6>
 nnoremap gF :e <cfile><cr>
@@ -252,6 +252,10 @@ def SpellOptions(): string
 enddef
 nnoremap yos :setlocal <C-R>=<SID>SpellOptions()<CR><CR>
 # Buffer navigation
+nnoremap <silent> [a :<C-U><C-R>=v:count1<CR>previous<CR>
+nnoremap <silent> ]a :<C-U><C-R>=v:count1<CR>next<CR>
+nnoremap <silent> [A :first<CR>
+nnoremap <silent> ]A :last<CR>
 nnoremap <silent> [b :<C-U><C-R>=v:count1<CR>bprevious<CR>
 nnoremap <silent> ]b :<C-U><C-R>=v:count1<CR>bnext<CR>
 nnoremap <silent> [B :bfirst<CR>
@@ -272,51 +276,60 @@ nnoremap <silent> ]d :<C-U><C-R>=v:count1<CR>lnext<CR>
 nnoremap <silent> [D :lNfile<CR>
 nnoremap <silent> ]D :lnfile<CR>
 # file list -> load buffers using :args * :args **/*.js **/*.css
-nnoremap <silent> [f :<C-U><C-R>=v:count1<CR>previous<CR>
-nnoremap <silent> ]f :<C-U><C-R>=v:count1<CR>next<CR>
-nnoremap <silent> [F :first<CR>
-nnoremap <silent> ]F :last<CR>
-# [c ]c for diff
+# nnoremap <silent> [f :<C-U><C-R>=v:count1<CR>previous<CR>
+# nnoremap <silent> ]f :<C-U><C-R>=v:count1<CR>next<CR>
+# nnoremap <silent> [F :first<CR>
+# nnoremap <silent> ]F :last<CR>
 
+def EditFileByOffset(num: number, first_or_last: number = 0)
+  var file = expand('%:p')
+
+  const sep = has('win32') ? '\' : '/'
+
+  if empty(file)
+    file = getcwd() .. sep
+  endif
+
+  const path = fnamemodify(file, ':h')
+
+  const filter_suffixes = substitute(escape(&suffixes, '~.*$^'), ',', '$\\|', 'g') .. '$'
+
+  const files = path
+    ->readdirex((x) => x.type == 'file' && x.name !~# filter_suffixes)
+    ->map((k, v) => fnamemodify($'{path}{sep}{v.name}', ':p'))
+    ->filter((k, v) => v != '')
+
+  var idx = index(files, file)
+  const l = files->len()
+  idx = (idx + num) % l
+  if idx < 0
+    idx += l
+  endif
+
+  if first_or_last == -1
+    idx = 0
+  elseif first_or_last == 1
+    idx = l - 1
+  endif
+
+  const f = fnameescape(fnamemodify(files[idx], ':.'))
+  echo $'[{idx + 1}/{l}] {f}'
+  silent execute $'edit {f}'
+enddef
+nnoremap <silent> [f <scriptcmd>EditFileByOffset(-v:count1)<CR>
+nnoremap <silent> ]f <scriptcmd>EditFileByOffset(v:count1)<CR>
+nnoremap <silent> [F <scriptcmd>EditFileByOffset(0, -1)<CR>
+nnoremap <silent> ]F <scriptcmd>EditFileByOffset(0, 1)<CR>
 # move lines
 xnoremap <tab> :sil! m '>+1<CR>gv
 xnoremap <s-tab> :sil! m '<-2<CR>gv
-# mark ring [[[1
-var mark_ring = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}]
-var mark_ring_i = 0
-
-def g:MarkPush()
-    mark_ring[mark_ring_i] = {'path': expand('%:p'), 'line': line('.'), 'col': col('.')}
-    mark_ring_i = (mark_ring_i + 1) % len(mark_ring)
-enddef
-
-def g:MarkPop(d: number)
-    mark_ring[mark_ring_i] = {'path': expand('%:p'), 'line': line('.'), 'col': col('.')}
-    mark_ring_i = (mark_ring_i + d + len(mark_ring)) %  len(mark_ring)
-    var mark = mark_ring[mark_ring_i]
-    if !has_key(mark, 'path')
-        echo 'empty mark_ping'
-        return
-    endif
-    if mark.path !=# expand('%:p')
-        silent exec 'e ' .. fnameescape(mark.path)
-    endif
-    call cursor(mark.line, mark.col)
-enddef
-
-nnoremap H <scriptcmd>g:MarkPop(-1)<CR>
-nnoremap L <scriptcmd>g:MarkPop(1)<CR>
-nnoremap <X1Mouse> <scriptcmd>g:MarkPop(-1)<CR>
-nnoremap <X2Mouse> <scriptcmd>g:MarkPop(1)<CR>
-# nnoremap mm <scriptcmd>g:MarkPush()<CR>
-
-# nnoremap <c-m> <scriptcmd>feedkeys($"yyp{getpos('.')[2] - 1}l")<CR>
 # terminal [[[1
 # set termwinkey=<C-\\>
 import autoload 'term.vim'
-xnoremap <expr> <space>t term.Send()
-nnoremap <expr> <space>t term.Send()
-nnoremap <expr> <space>tt term.Send() .. '_'
+xnoremap <expr> <c-q> term.Send()
+nnoremap <expr> <c-q> term.Send()
+nnoremap <expr> <c-q><c-q> term.Send() .. '_'
+imap <c-q> <ESC><c-q><c-q>a
 tnoremap <F1> <C-W>N
 tnoremap <C-W><C-W> <C-W>.
 # misc [[[1
@@ -324,8 +337,6 @@ tnoremap <C-W><C-W> <C-W>.
 nmap z] zo]z
 nmap z[ zo[z
 nnoremap <leader><space> za
-# syntax
-nnoremap <leader>Si  <scriptcmd>echo utils.Syninfo()<cr>
 # diff
 nnoremap <silent><leader>di :windo diffthis<CR>
 nnoremap <silent><leader>du :windo diffupdate<CR>
@@ -356,7 +367,7 @@ def SourceVim(...args: list<any>): string
 enddef
 nnoremap <silent> <expr> yr SourceVim()
 nnoremap <silent> <expr> yrr SourceVim() .. '_'
-xnoremap <silent> <expr> <space>v SourceVim()
+xnoremap <silent> <expr> <leader>v SourceVim()
 # external [[[1
 nnoremap <silent> gX  :call os#Gx()<CR>
 nnoremap <silent> gof :call os#FileManager()<CR>
@@ -367,5 +378,19 @@ nnoremap <C-n> :NERDTreeMirror<CR>:NERDTreeFocus<CR>
 nnoremap <C-t> :NERDTreeToggle<CR>
 nnoremap <C-f> :NERDTreeFind<CR>
 
+# obsidian [[[1
+def DailyNote()
+  const filename = expand(g:obsidian_vault .. "/0003 Journal/" .. strftime('%Y/W%V/%Y-%m-%d') .. '.md')
+  if !filereadable(filename)
+    echom "Create daily note in obsidian first."
+    return
+  endif
+  # const daily_note_dir = fnamemodify(filename, ':h')
+  # if !isdirectory(daily_note_dir)
+  #   call mkdir(daily_note_dir, 'p')
+  # endif
+  fnameescape(filename)->buf.EditInTab()
+enddef
+nnoremap <leader>v :call <SID>DailyNote()<CR>
 # ]]]
 # vim:fdm=marker:fmr=[[[,]]]:ft=vim

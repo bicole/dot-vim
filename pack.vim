@@ -26,6 +26,8 @@ try
 catch
 endtry
 
+packadd! matchit
+
 # ]]]
 import autoload "utils.vim"
 def AfterFun()
@@ -47,28 +49,23 @@ if is_ssh
   Pack 'ojroques/vim-oscyank', { type: 'delay', 'rev': 'main' } # <leader>c <leader>cc <A-w>
 endif
 if v:version >= 901 && !getcompletion('comment', 'packadd')->empty()
-  autocmd_add([{
-    event: 'VimEnter',
-    pattern: '*',
-    group: 'PlugPac',
-    once: true,
-    cmd: 'timer_start(1, (_) => execute("packadd comment"))',
-  }])
+  packadd! comment
 else
   Pack 'tomtom/tcomment_vim', { type: 'delay' }
 endif
 Pack 'bootleq/vim-cycle'
-Pack 'itchyny/lightline.vim', {type: 'start'}
-Pack 'machakann/vim-sandwich', { type: 'start' }
+# Pack 'itchyny/lightline.vim', { type: 'opt' }
+Pack 'bennyyip/vim-sandwich', { type: 'start' }
 
 if g:minimal_plugins
   g:loaded_netrw       = 0
   g:loaded_netrwPlugin = 0
-  packadd matchit
 else
   # Lab [[[2
-  Pack 'rhysd/vim-gfm-syntax'
-  Pack 'mg979/vim-visual-multi'
+  Pack 'ubaldot/vim-outline'
+  Pack 'junegunn/goyo.vim', { on: 'Goyo' }
+  # Pack 'rhysd/vim-gfm-syntax', { type: 'opt' }
+  # Pack 'mg979/vim-visual-multi'
   Pack 'ubaldot/vim9-conversion-aid'
   Pack 'dstein64/vim-startuptime', { 'on': 'StartupTime' }
   Pack 'chrisbra/vim_faq'
@@ -79,7 +76,6 @@ else
   Pack 'LunarWatcher/auto-pairs'
   Pack 'Konfekt/vim-alias'
   # Pack 'andymass/vim-matchup'
-  packadd matchit
   Pack 'nickspoons/vim-movefast'
   Pack 'airblade/vim-rooter', { type: 'start', 'branch': 'master' } # <leader>r
   Pack 'mhinz/vim-startify', { type: 'start' }
@@ -92,13 +88,7 @@ else
   Pack 'habamax/vim-dir', { type: 'start' }
 
   if has("patch-9.0.1811")
-    autocmd_add([{
-      event: 'VimEnter',
-      pattern: '*',
-      group: 'PlugPac',
-      once: true,
-      cmd: 'timer_start(1, (_) => execute("packadd editorconfig"))',
-    }])
+    packadd! editorconfig
   else
     Pack 'editorconfig/editorconfig-vim'
   endif
@@ -108,22 +98,29 @@ else
   Pack 'lfv89/vim-interestingwords'
   Pack 'luochen1990/rainbow'
   Pack 'mbbill/undotree', { 'on': 'UndotreeToggle' }
-  Pack 'mhinz/vim-sayonara', { 'on': 'Sayonara' }
   Pack 'tpope/vim-characterize'
   Pack 'tpope/vim-repeat', { type: 'start' }
   Pack 'chrisbra/NrrwRgn' # :NR :NW :NRV :WR
-  Pack 'ubaldot/vim-highlight-yanked'
+  # Pack 'justinmk/vim-gtfo' # gof got
+  # Pack 'bennyyip/vim-highlightedyank'
+  if has("patch-9.1.1230")
+    packadd! hlyank
+    g:hlyank_hlgroup = "Search"
+    g:hlyank_duration = 500
+  else
+    Pack 'ubaldot/vim-highlight-yanked'
+  endif
   if !is_win
     Pack 'lilydjwg/fcitx.vim'
   endif
-  Pack 'girishji/scope.vim'
+  # Pack 'girishji/scope.vim', { type: 'opt' }
   Pack 'bennyyip/miniterm.vim'
   # Motion and Edit [[[2
   Pack 'machakann/vim-swap' # g, g. gs gS
   Pack 'yegappan/taglist'
   Pack 'bennyyip/vim-debugstring' # <leader>ds
   Pack 'tommcdo/vim-lion' # <count>gl<motion><char>
-  Pack 'svermeulen/vim-yoink' # :Yanks
+  # Pack 'svermeulen/vim-yoink' # :Yanks
   Pack 'tommcdo/vim-exchange', { 'on': '<Plug>(Exchange)' } # gx gxx gxg
   Pack 'tpope/vim-abolish'
   Pack 'tpope/vim-apathy' # 'path'
@@ -151,24 +148,18 @@ else
   Pack 'girishji/devdocs.vim'
   Pack 'Shiracamus/vim-syntax-x86-objdump-d'
   # Pack 'octol/vim-cpp-enhanced-highlight', { 'for': 'cpp' }
-  Pack 'tikhomirov/vim-glsl', { 'for': 'glsl' }
-  Pack 'chrisbra/csv.vim', { type: 'opt' }
+  Pack 'chrisbra/csv.vim'
   Pack 'pearofducks/ansible-vim'
 
   Pack 'tridactyl/vim-tridactyl'
 
   Pack 'bfrg/vim-jq'
   Pack 'bfrg/vim-jqplay'
-  Pack 'vim-python/python-syntax'
   Pack 'lervag/vimtex'
-  # Typescript [[[3
-  # Pack 'leafgarland/typescript-vim', { 'for': 'typescript' }
-  Pack 'MaxMEllon/vim-jsx-pretty'
   # Web [[[3
+  Pack 'MaxMEllon/vim-jsx-pretty'
   Pack 'BourgeoisBear/clrzr'
   # Pack 'mattn/emmet-vim', { 'for': ['xml', 'html', 'css', 'javascript', 'typescript', 'typescript.tsx'] }
-  # Pack 'othree/html5.vim', { 'for': 'html' }
-  # Pack "hail2u/vim-css3-syntax", { 'for': 'css' }
   # Markup [[[3
   if is_win
     # Pack 'iamcco/markdown-preview.nvim', { 'do': "packadd markdown-preview.nvim \| call mkdp#util#install()" }

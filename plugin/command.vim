@@ -77,7 +77,7 @@ command! -bang -nargs=1 -complete=customlist,gotodef.XmapComplete Vmap gotodef.D
 
 # ]]]
 # Zen [[[1
-command! Zen silent! normal! <C-W>v<C-W>h:enew<CR>70<C-W><lt><C-W><C-W>
+# command! Zen silent! normal! <C-W>v<C-W>h:enew<CR>70<C-W><lt><C-W><C-W>
 # Share[[[1
 import autoload "share.vim"
 command! -range=% -nargs=? -complete=custom,share.Complete Share share.Paste(<q-args>, <line1>, <line2>)
@@ -90,8 +90,6 @@ command! -nargs=? Search {
   setreg('/', $'\V{escape(arg, '\\')}')
   normal! n
 }
-# Inspect: syntax group names under cursor [[[1
-command! Inspect :echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 # ]]]
 # Bonly [[[1
 command! Bonly :%bd<BAR>:e %%
@@ -108,6 +106,8 @@ def F5(cmd: string)
 enddef
 command! -nargs=+ -complete=command F5 F5(<q-args>)
 nnoremap <silent> <F5> <cmd>execute getreg('c')<CR>
+inoremap <silent> <F5> <ESC><cmd>execute getreg('c')<CR>
+nnoremap <silent> <F4> <cmd>execute getreg(':')<CR>
 # Term: send comamnd to terminal
 command! -nargs=+ -complete=shellcmdline Term term.SendLine(<q-args>)
 # ]]]

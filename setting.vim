@@ -12,14 +12,7 @@ set ruler
 set belloff=all shortmess=aoOTIc
 set display=lastline smoothscroll
 set hlsearch incsearch ignorecase smartcase
-set wildmenu wildmode=full wildoptions=pum,fuzzy pumheight=20
-set wildignore=*.o,*.obj,*.bak,*.exe,*.swp,tags,*.cmx,*.cmi,*~,*.py[co],__pycache__
-set complete-=i # disable scanning included files
-set complete-=t # disable searching tags
-# set completeopt=menu,longest,menuone,popup,noselect
-set completeopt=menu,popup,preview
-set completepopup=highlight:Pmenu,border:off
-set suffixes+=.a,.1,.class
+set suffixes+=.a,.1,.class,.mkv,.mp4
 set isfname-==
 set path=.,,,**
 set cpoptions=aABcfFqsZ # -e
@@ -36,10 +29,10 @@ set spelllang=en_us,cjk spellcapcheck=
 # set spelloptions=camel
 inoremap <C-b> <c-g>u<Esc>[s1z=`]a<c-g>u
 set nospell
-set number relativenumber nocursorline signcolumn=number
+set cursorline cursorlineopt=number number relativenumber signcolumn=number
 set conceallevel=0 concealcursor=n
 
-set diffopt=vertical,internal,filler,closeoff,indent-heuristic,hiddenoff,algorithm:patience
+set diffopt=vertical,internal,filler,closeoff,indent-heuristic,hiddenoff,algorithm:histogram,inline:char,linematch:50
 nnoremap <silent> [w <cmd>set diffopt-=iwhiteall,iblank<BAR>echo &diffopt<CR>
 nnoremap <silent> ]w <cmd>set diffopt+=iwhiteall,iblank<BAR>echo &diffopt<CR>
 set sessionoptions=buffers,curdir,help,tabpages,winsize,slash,unix,resize
@@ -62,7 +55,7 @@ set backupext=-vimbackup
 set backupdir=$VIMSTATE/backup/
 set directory=$VIMSTATE/swap/
 set undodir=$VIMSTATE/undo/
-set viminfo='200,/500,<50,s10,h,n$VIMSTATE/info/viminfo
+set viminfo='100,/500,<50,s10,h,n$VIMSTATE/info/viminfo
 set viewdir=$VIMSTATE/view
 
 for d in ['backup', 'swap', 'undo', 'info', 'view']
@@ -147,7 +140,8 @@ endif
 g:nogx = true
 g:vimsyn_folding = 'f'
 
-g:markdown_fenced_languages = ['html', 'datacorejsx=jsx', 'dataviewjs=javascript', 'js=javascript', 'ruby', 'zsh', 'bash=sh', 'python', 'ocaml']
+g:python_highlight_all = 1
+g:markdown_fenced_languages = ['html', 'datacorejsx=jsx', 'dataviewjs=javascript', 'js=javascript', 'ruby', 'zsh', 'bash=sh', 'python', 'ocaml', 'base=yaml']
 
 # this makes sure that shell scripts are highlighted
 # as bash scripts and not sh scripts
@@ -157,6 +151,7 @@ legacy let c_no_comment_fold = 1
 legacy let c_comment_strings = 1
 
 g:snips_author = 'Ben Yip'
+g:obsidian_vault = $HOME .. '/Obsidian-Vault'
 
 # Start NERDTree when Vim is started without file or session arguments.
 autocmd StdinReadPre * let s:std_in=1

@@ -16,6 +16,7 @@ g:minimal_plugins = v:false
 $v = $HOME .. (is_win ? '\vimfiles' : '/.vim')
 $VIMSTATE = $HOME .. '/.local/state/vim/'
 $VIMRC = $v .. '/vimrc'
+$RIPGREP_CONFIG_PATH = $HOME .. '/.ripgreprc'
 
 # Set map/maplocal leader (with \ and , as aliases)
 g:mapleader = "\<Space>"
@@ -108,7 +109,8 @@ g:loaded_2html_plugin     = 1
 g:loaded_getscriptPlugin  = 1
 g:loaded_gzip             = 1
 g:loaded_logiPat          = 1
-g:loaded_manpager_plugin  = 1
+# g:loaded_manpager_plugin  = 1
+# g:loaded_matchparen       = 1
 g:loaded_rrhelper         = 1
 g:loaded_spellfile_plugin = 1
 g:loaded_tarPlugin        = 1
@@ -116,6 +118,7 @@ g:loaded_vimballPlugin    = 1
 g:loaded_zipPlugin        = 1
 g:loaded_netrw            = 1
 g:loaded_netrwPlugin      = 1
+g:loaded_tutor_mode_plugin = 1
 
 g:load_black = 1
 g:loaded_fzf = 1
