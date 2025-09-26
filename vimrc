@@ -130,13 +130,23 @@ if exists('#vimrc')
   augroup! vimrc
 endif
 
-source $v/setting.vim
+try
+  source $v/setting.vim
+catch
+
+endtry
 
 if filereadable($HOME .. '/local.vim')
-  source $HOME/local.vim
+  try
+    source $HOME/local.vim
+  catch
+  endtry
 endif
 
-source $v/pack.vim
+try
+  source $v/pack.vim
+catch
+endtry
 
 # Color scheme (terminal)
 if !has('gui_running')
@@ -169,6 +179,10 @@ g:lightline = {
   \ }
 g:solarized_termcolors = 256
 g:solarized_termtrans = 1
+try
+  colorscheme solarized
+catch
+endtry
 
 # try
 #   colorscheme powerline

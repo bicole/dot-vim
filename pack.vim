@@ -241,6 +241,8 @@ else
   Pack 'scrooloose/nerdtree-project-plugin', {type: 'start'}
   Pack 'PhilRunninger/nerdtree-buffer-ops', {type: 'start'}
   Pack 'preservim/tagbar', {type: 'start'}
+
+  Pack 'tmux-plugins/vim-tmux'
 endif
 plugpac#End()
 # plugpac helpers [[[1

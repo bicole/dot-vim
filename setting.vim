@@ -32,7 +32,8 @@ set nospell
 set cursorline cursorlineopt=number number relativenumber signcolumn=number
 set conceallevel=0 concealcursor=n
 
-set diffopt=vertical,internal,filler,closeoff,indent-heuristic,hiddenoff,algorithm:histogram,inline:char,linematch:50
+set diffopt=vertical,filler,closeoff,hiddenoff,inline:char,linematch:50,internal,indent-heuristic,algorithm:histogram
+
 nnoremap <silent> [w <cmd>set diffopt-=iwhiteall,iblank<BAR>echo &diffopt<CR>
 nnoremap <silent> ]w <cmd>set diffopt+=iwhiteall,iblank<BAR>echo &diffopt<CR>
 set sessionoptions=buffers,curdir,help,tabpages,winsize,slash,unix,resize
